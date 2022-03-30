@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Bienvenido</h1>
+        <h2>Endpoints disponibles</h2>
+        
+        <h3>/alquileres?limit=[]&offset=[] --> para ver todas las propiedades</h3>
+        <br>
+        <h3>/comparativa  --> para ver la comparacion de las propiedades segun la moneda </h3>
+        <br>
+        <h3>/comparativa/pesos  --> para ver la comparacion de precios en pesos </h3>
+        <br>
+        <h3>/comparativa/dolares  --> para ver el grafico de precios en dolares </h3>
+        <br>
+        <p>Ingrese la ciudad de la cual desea ver los departamentos</p>
+
+        <form method = "POST" action="{{url_for('alquileres')}}">
+            <label>Ciudad:</label><br>
+            <input type="name" name="ciudad"><br>
+            <input type="submit" value="Enviar">
+        </form> 
+
+    </body>
+</html>

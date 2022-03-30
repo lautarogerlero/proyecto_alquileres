@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>Alquileres</Title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Registro de las propiedades de la base de datos</h1>
+
+        <table border="1">
+            <thead cellpadding="1.0" cellspacing="1.0">
+                <tr>
+                    <th>ID</th>
+                    <th>Precio</th>
+                    <th>Moneda</th>
+                    <th>Ciudad</th>
+                    <th>Dirección</th>
+                    <th>Condición</th>
+                </tr>
+                {% for row in data %}
+                <tr>
+                    <td>{{row["id"]}}</td>
+                    <td>{{row["price"]}}</td>
+                    <td>{{row["currency_id"]}}</td>
+                    <td>{{row["city"]}}</td>
+                    <td>{{row["location"]}}</td>
+                    <td>{{row["condition"]}}</td>
+                {% endfor %}    
+                </tr>
+            </thead>
+        </table>
+        <br>
+        <form action="{{url_for('alquileres_en_pesos')}}">
+            <input type="submit" value="Reporte propiedades en pesos">
+        </form>
+        <br>
+        <form action="{{url_for('alquileres_en_dolares')}}">
+            <input type="submit" value="Reporte propiedades en dolares">
+        </form>
+        <br>
+        <form action="{{url_for('index')}}">
+            <input type="submit" value="Inicio"/>
+        </form>
+        
+    </body>
+</html>
