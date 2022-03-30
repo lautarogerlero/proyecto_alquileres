@@ -1,4 +1,4 @@
-(/MercadoLibre.jpg)
+![logotipo](MercadoLibre.jpg)
 
 # Buscador de alquileres 
 
