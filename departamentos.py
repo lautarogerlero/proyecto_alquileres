@@ -20,8 +20,8 @@ class Departamento(db.Model):
         return f"Propiedad [Precio: {self.price}, Moneda: {self.currency_id}, Ciudad: {self.city}, Condicion {self.condition}, Direccion {self.location}]\n"
 
 
-def insertar_depto(ciudad):
-    data = api(ciudad)
+def insertar_depto(provincia):
+    data = api(provincia)
     
     for i in data:
         depto = Departamento(price=i["price"], currency_id=i["currency_id"], city=i["address"]["city_name"], condition=i["condition"], location=i["location"]["address_line"])

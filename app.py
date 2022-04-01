@@ -3,6 +3,7 @@ import traceback
 from flask import Flask, request, jsonify, render_template, Response, redirect
 import departamentos
 import graficos
+from lista_barrios import lista_barrios
 
 # Crear app
 app = Flask(__name__)
@@ -48,10 +49,11 @@ def alquileres():
     
     if request.method == "POST":
         try:
-            ciudad = str(request.form.get("ciudad"))
+            numero_barrio = int(request.form.get("barrio"))
+            barrio = lista_barrios[numero_barrio - 1]
             departamentos.db.drop_all()
             departamentos.db.create_all() 
-            departamentos.insertar_depto(ciudad) 
+            departamentos.insertar_depto(barrio) 
 
             data = departamentos.total_alquileres()
 
@@ -105,7 +107,7 @@ def alquileres_en_dolares():
         return jsonify({"trace": traceback.format_exc()})
 
 
-@app.route("/comparativa")
+@app.route("/alquileres/comparativa")
 def comparativa():
     try:
         x = departamentos.reporte()
@@ -115,7 +117,7 @@ def comparativa():
         return jsonify({"trace": traceback.format_exc()})
 
 
-@app.route("/comparativa/pesos")
+@app.route("/alquileres/comparativa/pesos")
 def comparativa_pesos():
     try:
         x = departamentos.reporte_pesos()
@@ -124,7 +126,7 @@ def comparativa_pesos():
     except:
         return jsonify({"trace": traceback.format_exc()})
 
-@app.route("/comparativa/dolares")
+@app.route("/alquileres/comparativa/dolares")
 def comparativa_dolares():
     try:
         x = departamentos.reporte_dolares()
@@ -132,17 +134,6 @@ def comparativa_dolares():
         return Response(image_html.getvalue(), mimetype="image/png")
     except:
         return jsonify({"trace": traceback.format_exc()})
-
-
-@app.before_first_request
-def before_first_request():
-    # Borrar y crear la BD
-    departamentos.db.drop_all()
-    departamentos.db.create_all() 
-    # Completar BD
-    departamentos.insertar_depto("Argentina")  
-    print("Base de datos generada") 
-
 
 
 if __name__ == "__main__":
