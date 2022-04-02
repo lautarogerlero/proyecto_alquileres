@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>Alquileres</Title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Bienvenido</h1>
+        <h2>Este es el buscador de departamentos en la Capital Federal</h2>       
+        <br>
+        <p>Para empezar ingrese el barrio del cual desea ver los departamentos</p>
+
+        <form method = "POST" action="{{url_for('alquileres')}}">
+            <select name="barrio" >
+
+                <option value="1">Almagro</option>
+                <option value="2">Balvanera</option>
+                <option value="3">Barracas</option>
+                <option value="4">Boedo</option>
+                <option value="5">Caballito</option>
+                <option value="6">Chacarita</option>
+                <option value="7">Colegiales</option>
+                <option value="8">Constitución</option>
+                <option value="9">Flores</option>
+                <option value="10">Floresta</option>
+                <option value="11">La Boca</option>
+                <option value="12">La Paternal</option>
+                <option value="13">Liniers</option>
+                <option value="14">Monserrat</option>
+                <option value="15">Núñez</option>
+                <option value="16">Palermo</option>
+                <option value="17">Parque Chacabuco</option>
+                <option value="18">Recoleta</option>
+                <option value="19">Retiro</option>
+                <option value="20">San Telmo</option>
+                <option value="21">Villa Crespo</option>
+                <option value="22">Villa Urquiza</option>
+                <option value="23">Villa del Parque</option>
+                
+         
+            </select> 
+            <input type="submit" value="Enviar">
+        </form>
+
+
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>Alquileres</Title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h2>Endpoints disponibles</h2>
+        <h3>/alquileres?limit=[]&offset=[] --> para ver todas las propiedades</h3>
+        <br>
+        <h3>/alquileres/comparativa  --> para ver la comparacion de las propiedades segun la moneda </h3>
+        <br>
+        <h3>/alquileres/comparativa/pesos  --> para ver la comparacion de precios en pesos </h3>
+        <br>
+        <h3>/alquileres/comparativa/dolares  --> para ver el grafico de precios en dolares </h3>
+        <br>
+        <br>
+        <form action="{{url_for('alquileres_en_pesos')}}">
+            <input type="submit" value="Reporte propiedades en pesos">
+        </form>
+        <br>
+        <form action="{{url_for('alquileres_en_dolares')}}">
+            <input type="submit" value="Reporte propiedades en dolares">
+        </form>
+        <br>
+        <form action="{{url_for('index')}}">
+            <input type="submit" value="Inicio"/>
+        </form>
+    </body>
+</html>
