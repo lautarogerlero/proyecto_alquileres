@@ -26,7 +26,7 @@ def index():
 
 @app.route("/alquileres", methods=["GET", "POST"])
 def alquileres():
-    if request.method == "GET":
+    if request.method == "GET": # Mostrar la tabla teniendo en cuenta el limit y offset
         try:
             limit_str = str(request.args.get("limit"))
             offset_str = str(request.args.get("offset"))
@@ -47,7 +47,7 @@ def alquileres():
         except:
             return jsonify({"trace": traceback.format_exc()})
     
-    if request.method == "POST":
+    if request.method == "POST": # Obtener el barrio deseado y en base a eso crear la nueva BD
         try:
             numero_barrio = int(request.form.get("barrio"))
             barrio = lista_barrios[numero_barrio - 1]
@@ -55,7 +55,7 @@ def alquileres():
             departamentos.db.create_all() 
             departamentos.insertar_depto(barrio) 
 
-            data = departamentos.total_alquileres()
+            data = departamentos.total_alquileres(barrio)
 
             return render_template("tabla.html", data=data)
 
@@ -63,8 +63,8 @@ def alquileres():
             return jsonify({"trace": traceback.format_exc()})
 
 
-@app.route("/alquileres/en_pesos")
-def alquileres_en_pesos():
+@app.route("/alquileres/en_pesos") 
+def alquileres_en_pesos(): # Crear una tabla que muestre solo los alquileres en pesos
     try:
         limit_str = str(request.args.get("limit"))
         offset_str = str(request.args.get("offset"))
@@ -86,7 +86,7 @@ def alquileres_en_pesos():
         return jsonify({"trace": traceback.format_exc()})
 
 @app.route("/alquileres/en_dolares")
-def alquileres_en_dolares():
+def alquileres_en_dolares(): # Crear una tabla que muestre solo los alquileres en dolares
     try:
         limit_str = str(request.args.get("limit"))
         offset_str = str(request.args.get("offset"))
@@ -107,8 +107,8 @@ def alquileres_en_dolares():
         return jsonify({"trace": traceback.format_exc()})
 
 
-@app.route("/alquileres/comparativa")
-def comparativa():
+@app.route("/alquileres/comparativa") 
+def comparativa(): 
     try:
         x = departamentos.reporte()
         image_html = graficos.graficar(x)

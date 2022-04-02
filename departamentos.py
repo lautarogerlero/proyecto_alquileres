@@ -9,28 +9,31 @@ db = SQLAlchemy()
 
 class Departamento(db.Model):
     __tablename__ = "departamento"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     price = db.Column(db.Integer)
     currency_id = db.Column(db.String)
-    city = db.Column(db.String)
+    neighborhood = db.Column(db.String)
     condition = db.Column(db.String)
     location = db.Column(db.String)
 
     def __repr__(self):
-        return f"Propiedad [Precio: {self.price}, Moneda: {self.currency_id}, Ciudad: {self.city}, Condicion {self.condition}, Direccion {self.location}]\n"
+        return f"Propiedad [Precio: {self.price}, Moneda: {self.currency_id}, Barrio: {self.neighborhood}, Condicion {self.condition}, Direccion {self.location}]\n"
 
 
-def insertar_depto(provincia):
-    data = api(provincia)
+def insertar_depto(barrio):
+    data = api(barrio) # Recolectar los datos
     
     for i in data:
-        depto = Departamento(price=i["price"], currency_id=i["currency_id"], city=i["address"]["city_name"], condition=i["condition"], location=i["location"]["address_line"])
+        if i["location"]["neighborhood"]["name"] == barrio: # Filtrar por el barrio seleccionado
+
+            depto = Departamento(id=i["id"], price=i["price"], currency_id=i["currency_id"], neighborhood=i["location"]["neighborhood"]["name"], condition=i["condition"], location=i["location"]["address_line"])
                                                                                                                                      
-        db.session.add(depto)
-        db.session.commit()
+            db.session.add(depto)
+            db.session.commit()
 
 
-def total_alquileres(limit=0, offset=0):
+
+def total_alquileres(barrio, limit=0, offset=0):
     query = db.session.query(Departamento)
     if limit > 0:
         query = query.limit(limit)
@@ -38,9 +41,9 @@ def total_alquileres(limit=0, offset=0):
             query = query.offset(offset)
 
     json_list = []
-    # Armar el diccionario
+    # Armar el diccionario con los datos de la BD
     for departamento in query:
-        result = {"id":departamento.id, "price":departamento.price, "currency_id":departamento.currency_id, "city":departamento.city, "location":departamento.location, "condition":departamento.condition}
+        result = {"id":departamento.id, "price":departamento.price, "currency_id":departamento.currency_id, "neighborhood":departamento.neighborhood, "location":departamento.location, "condition":departamento.condition}
         json_list.append(result)
     return json_list
 
@@ -53,9 +56,9 @@ def total_por_moneda(currency, limit=0, offset=0):
             query = query.offset(offset)
 
     json_list = []
-    # Armar el diccionario
+    # Armar el diccionario filtrando segun la moneda
     for departamento in query:
-        result = {"id":departamento.id, "price":departamento.price, "currency_id":departamento.currency_id, "city":departamento.city, "location":departamento.location, "condition":departamento.condition}
+        result = {"id":departamento.id, "price":departamento.price, "currency_id":departamento.currency_id, "neighborhood":departamento.neighborhood, "location":departamento.location, "condition":departamento.condition}
         json_list.append(result)
     return json_list
 
@@ -64,10 +67,10 @@ def reporte():
     x = {}
     
     result = db.session.query(Departamento).filter(Departamento.currency_id == "ARS").count()
-    x["En pesos"] = result
+    x["En pesos"] = result # Cantidad de deptos en pesos
 
     result = db.session.query(Departamento).filter(Departamento.currency_id == "USD").count()
-    x["En dolares"] = result
+    x["En dolares"] = result # Cantidad de deptos en dolares
 
     return x
 
