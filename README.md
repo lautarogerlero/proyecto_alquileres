@@ -18,7 +18,7 @@ Ademas hay 3 endpoints disponibles que muestran distintos graficos de torta.
 
 
 
-## Version 1.0
+## Version 1.2
 
 ## Autor
 Lautaro Gerlero
